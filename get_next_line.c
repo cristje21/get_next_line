@@ -2,81 +2,31 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-int	length_of_line(char *buff)
+char*	get_next_line(int fd)
 {
-	int	i;
-
-	i = 0;
-	while (buff[i] && buff[i] != '.')
-		i++;
-	return (i);
-}
-
-char	*move_buff(char *buff, int	line_length)
-{
-	int	i;
-
-	i = 0;
-	line_length++; // 5 buff: four\0
-	if (buff[line_length] == '\0')
-		buff[0] = '\0';
-	while (buff[line_length])
-	{
-		buff[i] = buff[line_length];
-		i++;
-		line_length++;
-	}
-	buff[i] = '\0';
-	return (buff);
-}
-
-char	*read_some(char *buff, char *next_line, int fd)
-{
-	int	bytes_read;
-	int	line_length;
-
-	line_length = BUFFER_SIZE;
-	while (line_length == BUFFER_SIZE)
-	{
-		bytes_read = read(fd, buff, BUFFER_SIZE);
-		if (bytes_read == -1 || bytes_read == 0)
-			return (NULL);
-		buff[bytes_read] = '\0';
-		line_length = length_of_line(buff);
-		next_line = ft_strjoin(next_line, buff, line_length);
-		if (next_line == NULL)
-			return (NULL);
-	}
-	buff = move_buff(buff, line_length);
-	return (next_line);
-}
-
-char *get_next_line(int fd)
-{
-	static char	*buff = NULL;
-	char		*next_line = NULL;
+	static char	*stash;
 	int			line_length;
+	char		*next_line;
 
-	line_length = BUFFER_SIZE;
-	if (buff == NULL)
-		buff = malloc(BUFFER_SIZE + 1);
-	else
+	next_line = NULL;
+	stash = strdup("hein");
+	if (stash)
 	{
-		line_length = length_of_line(buff);
-		next_line = ft_strjoin(next_line, buff, line_length);
-		if (next_line == NULL)
-			return (NULL);
-		if (line_length < ft_strlen(buff))
+		line_length = length_of_line(stash);
+		printf("%d\n", line_length);
+		next_line = ft_strjoin(next_line, stash, line_length);
+		if ((ft_strlen(stash) - line_length) <= 0)
 		{
-			buff = move_buff(buff, line_length);
-			return (next_line);
+			if (ft_strlen(stash) - line_length == 0)
+				return (free(stash), next_line);
+			free(stash);
 		}
+		else if ((ft_strlen(stash) - line_length ) > 0)
+			stash = new_stash(stash, line_length);
 	}
-	if (buff == NULL)
-		return (NULL);
-	next_line = read_some(buff, next_line, fd);
-	if (next_line == NULL)
-		return (NULL);
-	return (next_line);
+	line_length = 0;
+	fd = line_length;
+	return ("baardaapje");
 }

@@ -7,14 +7,15 @@
 int main(void)
 {
 	int	fd;
+	int	i;
 
-	fd = open("file.txt", O_RDWR);
-	// printf("%d\n", length_of_line("."));
-	// printf("%s\n", ft_strjoin(NULL , "is lekker", 6));
-	for (int i = 0; i < 6; i++)
+	i = 0;
+	fd = open("file.txt", O_RDONLY);
+	while (i < 1)
 	{
 		printf("%s", get_next_line(fd));
 		printf("\n------------------------\n");
+		i++;
 	}
 	close(fd);
 	return (0);

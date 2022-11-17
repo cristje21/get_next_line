@@ -13,8 +13,14 @@ $(NAME) : $(OBJ_F)
 %.o : %.c
 	$(CC) $(CFLAGS) -c $^ -o $@
 
-test : $(NAME) main.c
+test : $(NAME) main.c *.txt *.h
 	@$(CC) $(CFLAGS) main.c $(NAME) -o test && ./test
 
 clean :
-	rm -f test $(OBJ_F) $(NAME)
+	rm -f $(OBJ_F)
+
+fclean : clean
+	rm -f $(NAME)
+
+re : clean fclean
+	make test

@@ -2,6 +2,17 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
+#include <string.h>
+
+int	length_of_line(char *stash)
+{
+	int	i;
+
+	i = 0;
+	while (stash[i] && stash[i] != '\n')
+		i++;
+	return (i + 1);
+}
 
 int	ft_strlen(char *s)
 {
@@ -13,35 +24,47 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char *next_line, char *buff, int len)
+char	*new_stash(char *stash, int line_length)
+{
+	int		size;
+	char	*new_stash;
+
+	size = ft_strlen(stash) - line_length;
+	new_stash = malloc(size + 1);
+	if (new_stash == NULL)
+		return (NULL);
+	while (*(stash + line_length))
+	{
+		*new_stash = *(stash + line_length);
+		new_stash++;
+		line_length++;
+	}
+	*new_stash = '\0';
+	return (free(stash), new_stash);
+}
+
+char	*ft_strjoin(char *next_line, char *stash, int line_length)
 {
 	char	*new;
 	int		i;
-	int		j;
 
 	i = 0;
-	j = 0;
-	if (len != BUFFER_SIZE)
-		len++;
-	if (len == 0)
-		return(NULL);
+	if (line_length > ft_strlen(stash))
+		line_length--;
 	if (next_line != NULL)
-	{
-		new = malloc(ft_strlen(next_line) + len + 1);
-		while (next_line[i])
-		{
-			new[i] = next_line[i];
-			i++;
-		}
-	}
+		new = malloc(line_length + 1);
 	else
-		new = malloc(len + 1);
-	while (j < len)
+		new = malloc(ft_strlen(next_line) + line_length + 1);
+	if (new == NULL)
+		return (free(stash), NULL);
+	if (next_line)
+		while (next_line)
+			*new++ = *next_line++; 
+	while (i < line_length)
 	{
-		new[i] = buff[j];
+		*new++ = *(stash + i);
 		i++;
-		j++;
 	}
-	new[i] = '\0';
-	return (new);
+	*new = '\0';
+	return (free(next_line), new);
 }
