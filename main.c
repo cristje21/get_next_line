@@ -11,7 +11,7 @@ int main(void)
 
 	i = 0;
 	fd = open("file.txt", O_RDONLY);
-	while (i < 3)
+	while (i < 6)
 	{
 		printf("%s", get_next_line(fd));
 		printf("\n------------------------\n");

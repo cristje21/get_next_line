@@ -87,7 +87,6 @@ char	*get_line(char *next_line, char **stash, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
-	int		len;
 	int		line_length;
 
 	bytes_read = BUFFER_SIZE;
@@ -97,13 +96,11 @@ char	*get_line(char *next_line, char **stash, int fd)
 		if (bytes_read == -1)
 			return (NULL);
 		buffer[bytes_read] = '\0';
-		// len is zelfde als bytes read
-		len = ft_strlen(buffer);
 		line_length = length_of_line(buffer);
 		next_line = ft_strjoin(next_line, buffer, line_length);
-		if (line_length >= len)
+		if (line_length >= bytes_read)
 		{
-			if (line_length == len)
+			if (line_length == bytes_read)
 				return (next_line);
 			continue ;
 		}

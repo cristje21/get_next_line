@@ -31,5 +31,7 @@ char*	get_next_line(int fd)
 			return (next_line);
 	}
 	next_line = get_line(next_line, &stash, fd);
+	if (*next_line == '\0')
+		return (NULL);
 	return (next_line);
 }
