@@ -19,6 +19,8 @@ char*	get_next_line(int fd)
 		len = ft_strlen(stash);
 		line_length = length_of_line(stash);
 		next_line = ft_strjoin(next_line, stash, line_length);
+		if (next_line == NULL)
+			return (free(stash), NULL);
 		if (line_length >= len)
 		{
 			free(stash);
@@ -30,8 +32,8 @@ char*	get_next_line(int fd)
 		if (line_length < len)
 			return (next_line);
 	}
-	next_line = get_line(next_line, &stash, fd);
+	next_line = get_N_line(next_line, &stash, fd);
 	if (*next_line == '\0')
-		return (NULL);
+		return (free(stash), free(next_line), NULL);
 	return (next_line);
 }

@@ -10,6 +10,6 @@ int		length_of_line(char *stash);
 int		ft_strlen(char *s);
 char	*new_stash(char *stash, int line_length, int check);
 char	*ft_strjoin(char *next_line, char *stash, int line_length);
-char	*get_line(char *next_line, char **stash, int fd);
+char	*get_N_line(char *next_line, char **stash, int fd);
 
 #endif

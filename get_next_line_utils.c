@@ -1,8 +1,18 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   get_next_line_utils.c                              :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: cvan-sch <cvan-sch@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2022/11/18 17:01:16 by cvan-sch      #+#    #+#                 */
+/*   Updated: 2022/11/18 17:01:39 by cvan-sch      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdlib.h>
 #include <unistd.h>
 #include "get_next_line.h"
-#include <string.h>
 
 int	length_of_line(char *stash)
 {
@@ -83,7 +93,7 @@ char	*ft_strjoin(char *next_line, char *stash, int line_length)
 	return (free(next_line), new);
 }
 
-char	*get_line(char *next_line, char **stash, int fd)
+char	*get_N_line(char *next_line, char **stash, int fd)
 {
 	char	buffer[BUFFER_SIZE + 1];
 	int		bytes_read;
@@ -94,7 +104,7 @@ char	*get_line(char *next_line, char **stash, int fd)
 	{
 		bytes_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_read == -1)
-			return (NULL);
+			return (free(next_line), NULL);
 		buffer[bytes_read] = '\0';
 		line_length = length_of_line(buffer);
 		next_line = ft_strjoin(next_line, buffer, line_length);
@@ -109,17 +119,3 @@ char	*get_line(char *next_line, char **stash, int fd)
 	}
 	return (next_line);
 }
-
-// len = ft_strlen(stash);
-// 		line_length = length_of_line(stash);
-// 		next_line = ft_strjoin(next_line, stash, line_length);
-// 		if (line_length >= len)
-// 		{
-// 			free(stash);
-// 			stash = NULL;
-// 			if (line_length == len)
-// 				return(next_line);
-// 		}
-// 		stash = new_stash(stash, line_length);
-// 		if (line_length < len)
-// 			return (next_line);
