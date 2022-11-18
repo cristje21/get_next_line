@@ -1,5 +1,5 @@
 CC     = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 NAME   = getnextline.a
 
 SRC_F  = get_next_line.c get_next_line_utils.c

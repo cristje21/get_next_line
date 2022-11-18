@@ -6,27 +6,30 @@
 
 char*	get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash = NULL;
 	int			line_length;
 	char		*next_line;
+	int			len;
 
 	next_line = NULL;
-	stash = strdup("hein");
+	line_length = 0;
+	len = 0;
 	if (stash)
 	{
+		len = ft_strlen(stash);
 		line_length = length_of_line(stash);
-		printf("%d\n", line_length);
 		next_line = ft_strjoin(next_line, stash, line_length);
-		if ((ft_strlen(stash) - line_length) <= 0)
+		if (line_length >= len)
 		{
-			if (ft_strlen(stash) - line_length == 0)
-				return (free(stash), next_line);
 			free(stash);
+			stash = NULL;
+			if (line_length == len)
+				return(next_line);
 		}
-		else if ((ft_strlen(stash) - line_length ) > 0)
-			stash = new_stash(stash, line_length);
+		stash = new_stash(stash, line_length, 1);
+		if (line_length < len)
+			return (next_line);
 	}
-	line_length = 0;
-	fd = line_length;
-	return ("baardaapje");
+	next_line = get_line(next_line, &stash, fd);
+	return (next_line);
 }
