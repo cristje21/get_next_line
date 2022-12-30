@@ -1,8 +1,7 @@
-CC     = gcc
-CFLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra 
 NAME   = getnextline.a
-
-SRC_F  = get_next_line.c get_next_line_utils.c
+SANITIZE = -g -fsanitize=address
+SRC_F  = get_next_line_bonus.c get_next_line_utils_bonus.c
 OBJ_F  = $(SRC_F:%.c=%.o)
 
 all : $(NAME)
